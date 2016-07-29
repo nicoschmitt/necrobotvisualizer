@@ -65,7 +65,8 @@ Map.prototype.addToPath = function(pt) {
     if (this.initPath()) {
         var latLng = L.latLng(pt.lat, pt.lng);
         this.path.addLatLng(latLng);
-        this.me.setLatLng(L.latLng(pt.lat, pt.lng)).getPopup().setContent(`${pt.lat},${pt.lng}`)
+        this.me.setLatLng(latLng).getPopup().setContent(`${pt.lat},${pt.lng}`)
+        this.map.panTo(latLng);
     }
     this.steps.push(pt);
 }

@@ -1,18 +1,27 @@
 
 var Map = function(parentDiv) {
 
-    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { });
+    var osmStandard = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { });
+    var osmCycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', { });
+    var osmCycleTransport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png', { });
+    
+    var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', { });
+    var watercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', { });
 
     this.layerPokestops = new L.LayerGroup();
     this.layerCatches = new L.LayerGroup();
     this.layerPath = new L.LayerGroup();
 
     this.map = L.map(parentDiv, {
-        layers: [osm, this.layerPath, this.layerCatches, this.layerPokestops]
+        layers: [osmStandard, this.layerPath, this.layerCatches, this.layerPokestops]
     });
     
     var baseLayers = {
-        "OpenStreetMap": osm
+        "OpenStreetMap": osmStandard,
+        "OpenCycleMap": osmCycle,
+        "OpenCycleMap Transport": osmCycleTransport,
+        "Toner": toner,
+        "Watercolor": watercolor,
     };
     var overlays = {
             "Path": this.layerPath,

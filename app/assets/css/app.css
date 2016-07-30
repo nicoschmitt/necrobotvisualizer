@@ -32,7 +32,7 @@ body, html, .content {
   padding: 10px 0px;
   position: absolute;
   right: 10px;
-  top: 10px;
+  bottom: 10px;
   display: flex;
   flex-direction: row;
   z-index: 1000;

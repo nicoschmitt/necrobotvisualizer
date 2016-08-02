@@ -109,7 +109,18 @@ Map.prototype.addCatch = function(pt) {
 
     this.catches.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, className: "pkmIcon", iconAnchor: [25, 25] });
+    var iconUrl = `/assets/pokemon/${pt.id}.png`;
+    var urlForL = '.' + iconUrl;
+    var urlForSizeOf = './app/' + iconUrl;
+
+    var sizeOf = require('image-size');
+    var imageDimensions = sizeOf(urlForSizeOf);
+    var maxDimension = Math.max(imageDimensions.width, imageDimensions.height);
+    var maxSize = 50;
+    var scaleFactor = maxSize / maxDimension;
+    var iconSize =  [imageDimensions.width*scaleFactor, imageDimensions.height*scaleFactor]
+    
+    var icon = L.icon({ iconUrl: urlForL, className: "pkmIcon", iconSize: iconSize });
     L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pkm).addTo(this.layerCatches);
 }
 

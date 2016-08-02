@@ -1,7 +1,6 @@
 
 var Map = function(parentDiv) {
 
-
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
     var osmCycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png');

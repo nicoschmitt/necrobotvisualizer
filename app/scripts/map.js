@@ -1,6 +1,6 @@
 
 var Map = function(parentDiv) {
-    
+
 
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
@@ -192,7 +192,6 @@ Map.prototype.displayInventory = function(items) {
     $(".inventory .sort").hide();
     var itemsTotal = 0
     $.map(items, function(key) {
-      // filtering "Incubator ∞" from itemsTotal
       if (key.itemId !== 901){
         itemsTotal += key.count
       }

@@ -1,10 +1,11 @@
 
 var Map = function(parentDiv) {
     
+
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
     var osmCycle = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png');
-    var osmCycleTransport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png');    
+    var osmCycleTransport = L.tileLayer('http://{s}.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png');
     var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png');
     var watercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg');
 
@@ -189,7 +190,14 @@ Map.prototype.displayEggsList = function(eggs) {
 Map.prototype.displayInventory = function(items) {
     console.log("Inventory list");
     $(".inventory .sort").hide();
-    $(".inventory .numberinfo").text(items.length + "/350");
+    var itemsTotal = 0
+    $.map(items, function(key) {
+      // filtering "Incubator ∞" from itemsTotal
+      if (key.itemId !== 901){
+        itemsTotal += key.count
+      }
+    });
+    $(".inventory .numberinfo").text(itemsTotal + "/350");
     var div = $(".inventory .data")
     div.html(``);
     items.forEach(function(elt) {

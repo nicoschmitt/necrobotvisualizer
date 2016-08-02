@@ -168,7 +168,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
                     <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
                 <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>
-                <span class="info">Candy: ${elt.candy}<span ${evolveStyle}>/${elt.candyToEvolve}</span></span>
+                <span class="info">Candy: <strong>${elt.candy}</strong><span ${evolveStyle}> | <strong>${elt.candyToEvolve}</strong></span></span>
                 <span class="imgspan"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
                 <span class="name">${elt.name}</span>
             </div>

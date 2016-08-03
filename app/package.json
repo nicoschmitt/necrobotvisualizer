@@ -5,6 +5,7 @@
   "author": "Nicolas Schmitt",
   "main": "main.js",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "image-size": "latest"
   }
 }

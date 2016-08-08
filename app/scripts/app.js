@@ -50,8 +50,11 @@
         $("#sortBypokemonId").click(() => global.map.displayPokemonList(null, "pokemonId"));
         $("#sortBycp").click(() => global.map.displayPokemonList(null, "cp"));
         $("#sortByiv").click(() => global.map.displayPokemonList(null, "iv"));
+        $("#sortByLevel").click(() => global.map.displayPokemonList(null, "lvl"));
+        
+       
 
-        $("#sortBypokemonId, #sortBycp, #sortByiv").click( function() {
+        $("#sortBypokemonId, #sortBycp, #sortByiv, #sortByLevel").click( function() {
             if(!$(this).hasClass("active")) {
                 $(this).toggleClass("active").siblings().removeClass("active");
             }

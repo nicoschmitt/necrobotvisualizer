@@ -1,5 +1,4 @@
 $(function() {
-
     function cmpVersions (a, b) {
         a = a.replace(/[a-z]/g, "");
         b = b.replace(/[a-z]/g, "");
@@ -37,5 +36,4 @@ $(function() {
     }
 
     check();
-
 });

@@ -1,5 +1,4 @@
 (function() {
-
     function getURLParameter(sParam) {
         var sPageURL = window.location.search.substring(1);
         var sURLVariables = sPageURL.split('&');
@@ -26,7 +25,7 @@
         console.log("Load config from disk");
 
         var path = require("path");
-        var fs = require("fs"); 
+        var fs = require("fs");
         var { remote } = require("electron");
 
         var configfile = path.join(remote.app.getPath("userData"), "settings.json");
@@ -40,7 +39,7 @@
         service.load = function() {
             var config = defaultConfig;
             try {
-                config = JSON.parse(fs.readFileSync(configfile, 'utf-8')); 
+                config = JSON.parse(fs.readFileSync(configfile, 'utf-8'));
                 config = Object.assign({}, defaultConfig, config);
                 config.version = version;
             } catch(err) {
@@ -77,5 +76,4 @@
     }
 
     window.configService = service;
-
 }());

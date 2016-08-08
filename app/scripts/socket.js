@@ -25,10 +25,10 @@ function listenToWebSocket() {
             global.connected = false;
         }
     };
-    ws.onopen = () => { 
+    ws.onopen = () => {
         console.log("Connected to Bot");
         global.connected = true;
-        $(".loading").text("Waiting to get GPS coordinates from Bot..."); 
+        $(".loading").text("Waiting to get GPS coordinates from Bot...");
     };
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
@@ -52,9 +52,9 @@ function listenToWebSocket() {
             ws.send(JSON.stringify({ Command: "GetPokemonSettings" }));
         } else if (command.indexOf("UpdatePositionEvent") >= 0) {
             if (!global.snipping) {
-                global.map.addToPath({ 
-                    lat: msg.Latitude, 
-                    lng: msg.Longitude 
+                global.map.addToPath({
+                    lat: msg.Latitude,
+                    lng: msg.Longitude
                 });
             }
         } else if (command.indexOf("PokemonCaptureEvent") >= 0) {

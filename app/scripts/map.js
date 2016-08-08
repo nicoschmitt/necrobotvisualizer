@@ -109,7 +109,7 @@ Map.prototype.addCatch = function(pt) {
 
     this.catches.push(pt);
 
-    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [50, 50], iconAnchor: [25, 25] });
+    var icon = L.icon({ iconUrl: `./assets/pokemon/${pt.id}.png`, iconSize: [0, 0], iconAnchor: [25, 25] });
     L.marker([pt.lat, pt.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pkm).addTo(this.layerCatches);
 }
 

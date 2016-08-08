@@ -283,7 +283,7 @@ img.leaflet-marker-icon.leaflet-zoom-animated.leaflet-interactive {
 @media (max-width: 767px) {
   .toolbar {
     top: 100px;
-    left: 12px;
+    left: 20px;
     display: unset;
     flex-direction: unset;
   }

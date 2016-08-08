@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8">
     <title>Pokemon Bot Visualizer - Config</title>
@@ -22,7 +21,7 @@
             if (appconfig.websocket != $("#txtWebSocket").val()) {
                 // clean context if url is changed (change bot ?)
                 sessionStorage.setItem("available", false)
-            } 
+            }
 
             appconfig.locale = $("#slLocale").val();
             appconfig.websocket = $("#txtWebSocket").val();
@@ -46,9 +45,8 @@
             $("#saveBtn").click(saveConfig);
             $("#cancelBtn").click(navigateAway);
         });
-    </script>    
+    </script>
   </head>
-  
   <body>
     <div class="content">
         <h2>Visualizer Config</h2>
@@ -66,8 +64,8 @@
                 </li>
                 <li>
                     <label>Map options</label>
-                    <div><input type="checkbox" id="chkFollowPlayer" class="field-comon" /><span>Follow player on map</span></div>
-                    <div><input type="checkbox" id="chkNoPopup" class="field-comon" /><span>Disable popups</span></div>
+                    <div><span><input type="checkbox" id="chkFollowPlayer" class="field-comon" />Follow player on map</span></div>
+                    <div><span><input type="checkbox" id="chkNoPopup" class="field-comon" />Disable popups</span></div>
                 </li>
                 <li>
                     <label>Bot Websocket</label>
@@ -81,5 +79,4 @@
         </form>
     </div>
   </body>
-
 </html>

@@ -41,8 +41,6 @@ body, html, .content {
   background-color: #fff;
   box-shadow: 0px 0px 5px rgba(0,0,0,0.7);
   border-radius: 4px;
-  bottom: 15px;
-  right: 15px;
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -111,7 +109,6 @@ body, html, .content {
   background-color: rgba(255,255,255,0.95);
   color: #436a6b;
   width: 60%;
-  min-width: 500px;
   height: 63%;
   min-height: 400px;
   position: absolute;
@@ -173,7 +170,6 @@ body, html, .content {
 
 .eggs img, .items img {
   max-width: 65px;
-  max-height: 80px;
   margin: auto;
 }
 
@@ -276,4 +272,88 @@ body, html, .content {
 .close {
   position: absolute;
   right: 10px;
+}
+
+img.leaflet-marker-icon.leaflet-zoom-animated.leaflet-interactive {
+  width: auto !important;
+  height: auto !important;
+  max-height: 50px !important;
+}
+
+@media (max-width: 767px) {
+  .toolbar {
+    top: 100px;
+    left: 20px;
+    display: unset;
+    flex-direction: unset;
+  }
+
+  .toolbar a {
+    padding: 10px 12px 5px;
+    line-height: 20px;
+    border-bottom: 1px solid #CCC;
+  }
+
+  .toolbar div:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .toolbar div:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .data::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  .inventory {
+    width: 70%;
+    height: 65%;
+    min-width: 300px;
+  }
+  .inventory .numberinfo {
+    padding: .25em;
+    margin: .35em auto;
+  }
+  .inventory .info {
+    font-size: 70%;
+  }
+  .pokemon {
+    width: auto;
+    max-width: 45%;
+    padding: .6em 1.55em .6em 1.55em;
+  }
+
+  .pokemonsort {
+    margin-top: 2em;
+  }
+  .pokemonsort a {
+    padding: .3em;
+  }
+
+  .eggs, .items {
+    width: auto;
+  }
+  .eggs {
+    padding: 0px;
+    margin: .9em 2em;
+  }
+  .items {
+    padding: 0px;
+    margin: .95em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+@media (min-width: 1200px) {
+
 }

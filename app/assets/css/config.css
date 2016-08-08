@@ -1,13 +1,11 @@
 
 form {
-    background-color: #eee;
-    color: black;
+    background-color: #EEE;
+    color: #000;
     padding-top: 10px;
     padding-bottom: 40px;
-    font-size: 100%;
-
     width: 60%;
-    min-width: 500px;
+    min-width: 300px;
     margin: 20px auto;
 }
 
@@ -16,20 +14,25 @@ form {
 }
 
 .config-form {
-    margin:10px 0;
-    max-width: 80%;
+    margin: 10px 0;
     padding: 20px 12px 10px 20px;
 }
 .config-form li {
-    padding: 0;
+    padding: 0px;
     display: block;
     list-style: none;
-    margin: 30px 0 0 0;
+    margin: 30px 0px 0px 0px;
 }
-.config-form label{
-    margin: 0px 0 10px 0;
-    padding:0px;
-    display:block;
+.config-form li span {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+
+.config-form label {
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+    display: block;
     font-weight: bold;
     font-size: 120%;
 }
@@ -44,10 +47,11 @@ form {
 textarea,
 select{
     box-sizing: border-box;
-    border:1px solid #BEBEBE;
-    padding: 7px;
-    margin:0px;
     transition: all 0.30s ease-in-out;
+    color: #555;
+    background: #FFF;
+    border: 1px solid #BEBEBE;
+    padding: 3%;
     outline: none;
 }
 .config-form input[type=text]:focus,
@@ -60,9 +64,22 @@ select{
 .config-form input[type=email]:focus,
 .config-form textarea:focus,
 .config-form select:focus{
-    box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0px 0px 5px #88D5E9;
     border: 1px solid #88D5E9;
+    padding: 3%;
 }
+
+.config-form input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    margin: 2%;
+    vertical-align: bottom;
+    position: relative;
+    top: 5px;
+    left: -3px;
+    *overflow: hidden;
+}
+
 .config-form .field-folder {
     width: 70%;
 }
@@ -87,16 +104,49 @@ select{
 }
 input[type=submit], input[type=button]{
     background: #4B99AD;
-    padding: 8px 15px 8px 15px;
+    padding: 8px 15px;
     border: none;
-    color: #fff;
+    color: #FFF;
     font-size: 100%;
 }
 input[type=submit]:hover, input[type=button]:hover{
     background: #4691A4;
-    box-shadow:none;
+    box-shadow: none;
     font-size: 100%;
 }
 .config-form .required{
-    color:red;
+    color: #FF0000;
+}
+
+@media (max-width: 767px) {
+    form {
+        width: auto;
+        padding: 0px;
+        margin: 3.5em auto;
+    }
+
+    .config-form {
+        margin: auto;
+        padding: .9em;
+    }
+    .config-form .field-common {
+        width: 100%;
+    }
+
+    input[type=submit], input[type=button] {
+        min-width: 125px;
+        margin: 5px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+@media (min-width: 1200px) {
+
 }

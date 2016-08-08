@@ -1,15 +1,15 @@
 (function() {
     var global = { snipping: false };
     window.global = global;
- 
+
     global.config = window.configService.load();
     global.version = global.config.version;
 
     document.title += " - " + global.version;
 
-    var wssend = function(obj) { 
+    var wssend = function(obj) {
         var data = typeof(obj) != "object" ? obj : JSON.stringify(obj);
-        global.ws.send(data); 
+        global.ws.send(data);
     };
 
     function confirmAndSendToServer(msg, callback) {
@@ -35,15 +35,15 @@
         $("#eggsLink").click( function() {
             if ($(".inventory").css("opacity") == "1" && $(".inventory .data .eggs").length) {
                 $(".inventory").removeClass("active");
-            } else { 
-                wssend("EggsList"); 
+            } else {
+                wssend("EggsList");
             }
         });
         $("#inventoryLink").click( function() {
             if ($(".inventory").css("opacity") == "1" && $(".inventory .data .items").length) {
                 $(".inventory").removeClass("active");
             } else {
-                wssend("InventoryList"); 
+                wssend("InventoryList");
             }
         });
 

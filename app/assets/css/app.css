@@ -12,6 +12,7 @@
 }
 
 body, html, .content {
+    margin: 0px;
     font-family: Roboto;
     font-weight: 400;
     background-color: black;

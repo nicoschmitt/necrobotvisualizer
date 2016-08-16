@@ -25,10 +25,10 @@ function listenToWebSocket() {
             global.connected = false;
         }
     };
-    ws.onopen = () => { 
+    ws.onopen = () => {
         console.log("Connected to Bot");
         global.connected = true;
-        $(".loading").text("Waiting to get GPS coordinates from Bot..."); 
+        $(".loading").text("Waiting to get GPS coordinates from Bot...");
     };
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
@@ -52,9 +52,9 @@ function listenToWebSocket() {
             ws.send(JSON.stringify({ Command: "GetPokemonSettings" }));
         } else if (command.indexOf("UpdatePositionEvent") >= 0) {
             if (!global.snipping) {
-                global.map.addToPath({ 
-                    lat: msg.Latitude, 
-                    lng: msg.Longitude 
+                global.map.addToPath({
+                    lat: msg.Latitude,
+                    lng: msg.Longitude
                 });
             }
         } else if (command.indexOf("PokemonCaptureEvent") >= 0) {
@@ -107,7 +107,9 @@ function listenToWebSocket() {
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
                     candy: p.Item3,
                     candyToEvolve: pkmInfo ? pkmInfo.CandyToEvolve : 0,
-                    favorite: p.Item1.Favorite != 0
+                    favorite: p.Item1.Favorite != 0,
+                    move1: inventory.getMove(p.Item1.Move1),
+                    move2: inventory.getMove(p.Item1.Move2)
                 }
             });
             global.map.displayPokemonList(pkm);

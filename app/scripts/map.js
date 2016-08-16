@@ -150,7 +150,7 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
     }
 
     if (sortBy == "pokemonId") {
-        this.pokemonList = this.pokemonList.sort((p1, p2) => p1[sortBy] - p2[sortBy]);
+        this.pokemonList = this.pokemonList.sort((p1, p2) => p1[sortBy] === p2[sortBy] ? p1.iv - p2.iv : p1[sortBy] - p2[sortBy]);
     } else {
         this.pokemonList = this.pokemonList.sort((p1, p2) => p2[sortBy] - p1[sortBy]);
     }

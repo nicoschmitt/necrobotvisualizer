@@ -169,14 +169,16 @@ Map.prototype.displayPokemonList = function(all, sortBy) {
                     <a title='Transfer' href="#" class="transferAction" ${transferStyle}><img src="./assets/img/recyclebin.png" /></a>
                     <a title='Evolve' href="#" class="evolveAction" ${evolveStyle}><img src="./assets/img/evolve.png" /></a>
                 </div>
-                <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong></span>
-                <span class="info">Candy: ${elt.candy}<span ${evolveStyle}>/${elt.candyToEvolve}</span></span>
+                <span class="info">CP: <strong>${elt.cp}</strong> IV: <strong>${elt.iv}%</strong> </span>
+                <span class="info">HP: <strong>${elt.hp}/${elt.hpMax}</strong> LVL: <strong>${elt.lvl}</strong></span>
+                <span class="info">Candy: <strong>${elt.candy}<span ${evolveStyle}>/${elt.candyToEvolve}</span></strong></span>
                 <span class="imgspan ${evolveClass}"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
                 <span class="name">${elt.name}</span>
             </div>
         `);
     });
     $(".pokemonsort").show();
+    $(".pokemonfilter").show();
     $(".inventory").show().addClass("active");
 }
 

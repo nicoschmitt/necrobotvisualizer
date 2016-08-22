@@ -79,7 +79,13 @@ Map.prototype.initPath = function() {
 
     if (!this.me) {
         this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
-        this.me = L.marker([this.steps[0].lat, this.steps[0].lng], { zIndexOffset: 200 }).addTo(this.map).bindPopup(`${this.steps[0].lat},${this.steps[0].lng}`);
+        var icon =  new L.Icon({
+               // iconUrl : "https://harrywood.co.uk/maps/examples/leaflet/marker-icon-red.png"
+               iconUrl:"http://orig13.deviantart.net/9754/f/2011/307/2/e/original_trainer_red_sprite_bw_by_flamejow-d4dtyxy.png",
+               iconSize:     [80, 80],
+               iconAnchor:   [40, 0]
+        })
+        this.me = L.marker([this.steps[0].lat, this.steps[0].lng], { zIndexOffset: 200, icon:icon }).addTo(this.map).bindPopup(`${this.steps[0].lat},${this.steps[0].lng}`);
         $(".loading").hide();
     }
 

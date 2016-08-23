@@ -33,6 +33,7 @@ function listenToWebSocket() {
     ws.onmessage = function (evt) {
         var msg = JSON.parse(evt.data);
         var command = msg.Command || msg.$type;
+        $(".toolbar div").show();
         if (command.indexOf("PokemonSettings") >= 0) {
             var settings = msg.Data.$values;
             global.pokemonSettings = Array.from(msg.Data.$values, elt => {
@@ -107,7 +108,8 @@ function listenToWebSocket() {
                     realname: inventory.getPokemonName(p.Item1.PokemonId, "en"),
                     candy: p.Item3,
                     candyToEvolve: pkmInfo ? pkmInfo.CandyToEvolve : 0,
-                    favorite: p.Item1.Favorite != 0
+                    favorite: p.Item1.Favorite != 0,
+                    lvl: inventory.getPokemonLevel(p.Item1),
                 }
             });
             global.map.displayPokemonList(pkm);
@@ -129,7 +131,8 @@ function listenToWebSocket() {
                     doneDist: i.EggKmWalkedStart
                 }
             });
-            global.map.displayEggsList(incubators.concat(eggs));
+            eggs = incubators.concat(eggs).filter(e => e);
+            global.map.displayEggsList(eggs);
         } else if (command.indexOf("InventoryListEvent") >= 0) {
             console.log(msg);
             var items = Array.from(msg.Items.$values, item => {
@@ -147,6 +150,10 @@ function listenToWebSocket() {
                 name: inventory.getPokemonName(msg.Id)
             };
             pokemonToast(pkm, { title: "A Pokemon Evolved" });
+        } else if (command.indexOf("PathEvent") >= 0) {
+            var json = "[" + msg.StringifiedPath + "]";
+            json = json.replace(/lat/g, '"lat"').replace(/lng/g, '"lng"');
+            global.map.setRoute(JSON.parse(json));
         } else if (command.indexOf("TransferPokemonEvent") >= 0) {
             // nothing
         } else if (command.indexOf("FortTargetEvent") >= 0) {
@@ -167,7 +174,9 @@ function listenToWebSocket() {
             // nothing
         } else if (command.indexOf("EggIncubatorStatusEvent") >= 0) {
             // nothing
-        } else if (command.indexOf("iconAnchor") >= 0) {
+        } else if (command.indexOf("HumanWalkingEvent") >= 0) {
+            // nothing
+        } else if (command.indexOf("UnaccurateLocation") >= 0) {
             // nothing
         } else if (command.indexOf("ErrorEvent") >= 0) {
             console.log(msg.Message);

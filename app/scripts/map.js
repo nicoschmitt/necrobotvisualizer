@@ -102,7 +102,7 @@ Map.prototype.initPath = function() {
         })
         var last = this.steps[this.steps.length - 1];
         this.map.setView([last.lat, last.lng], 16);
-        this.me = L.marker([last.lat, last.lng], { zIndexOffset: 200 }).addTo(this.map).bindPopup(`${last.lat.toFixed(4)},${last.lng.toFixed(4)}`);
+        this.me = L.marker([last.lat, last.lng], { zIndexOffset: 200 , icon: icon}).addTo(this.map).bindPopup(`${last.lat.toFixed(4)},${last.lng.toFixed(4)}`);
         $(".loading").hide();
     }
 

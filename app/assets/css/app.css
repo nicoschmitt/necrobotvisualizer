@@ -115,7 +115,8 @@ body, html, .content {
   .message .close {
     top: 10px; }
 
-.inventory {
+.inventory,
+.snipes {
   box-sizing: content-box;
   background-color: rgba(255, 255, 255, 0.95);
   color: #436a6b;
@@ -135,51 +136,70 @@ body, html, .content {
   width: 60%;
   height: 63%; }
   @media only screen and (max-width: 992px) {
-    .inventory {
+    .inventory,
+    .snipes {
       width: 95%;
       height: 80%; } }
-  .inventory.active {
+  .inventory.active,
+  .snipes.active {
     top: 50%;
     opacity: 1;
     transition: top 500ms, opacity 500ms; }
-  .inventory .data {
+  .inventory .data,
+  .snipes .data {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     overflow: auto;
     box-sizing: border-box; }
-    .inventory .data::-webkit-scrollbar-track {
+    .inventory .data::-webkit-scrollbar-track,
+    .snipes .data::-webkit-scrollbar-track {
       border-radius: 20px;
       background-color: #F5F5F5; }
-    .inventory .data::-webkit-scrollbar {
+    .inventory .data::-webkit-scrollbar,
+    .snipes .data::-webkit-scrollbar {
       width: 18px;
       background-color: #F5F5F5; }
-    .inventory .data::-webkit-scrollbar-thumb {
+    .inventory .data::-webkit-scrollbar-thumb,
+    .snipes .data::-webkit-scrollbar-thumb {
       border-radius: 20px;
       background-color: #436a6b; }
-  .inventory .info {
+  .inventory .info,
+  .snipes .info {
     font-size: 80%; }
     @media only screen and (max-width: 600px) {
-      .inventory .info {
+      .inventory .info,
+      .snipes .info {
         font-size: 70%; } }
-  .inventory .numberinfo {
+  .inventory .numberinfo,
+  .snipes .numberinfo {
     padding: .6em 3em;
     margin: .6em auto;
     max-width: 100px;
     display: block;
     border: 1px solid #436a6b;
     border-radius: 5px; }
-  .inventory .pokemonsort a {
+  .inventory .pokemonsort a,
+  .snipes .pokemonsort a {
     text-decoration: none;
     color: #436a6b;
     display: inline-block;
     padding: .3em .5em;
     border-radius: .2em; }
-    .inventory .pokemonsort a:hover, .inventory .pokemonsort a:active, .inventory .pokemonsort a.active {
+    .inventory .pokemonsort a:hover, .inventory .pokemonsort a:active, .inventory .pokemonsort a.active,
+    .snipes .pokemonsort a:hover,
+    .snipes .pokemonsort a:active,
+    .snipes .pokemonsort a.active {
       background-color: #436a6b;
       color: #eee; }
-    .inventory .pokemonsort a:hover {
+    .inventory .pokemonsort a:hover,
+    .snipes .pokemonsort a:hover {
       opacity: 0.7; }
+  .inventory .targeted,
+  .snipes .targeted {
+    background: #ca7349;
+    color: #fff;
+    border: doted 3px red; }
 
 .item, .egg, .pokemon {
   box-sizing: border-box;

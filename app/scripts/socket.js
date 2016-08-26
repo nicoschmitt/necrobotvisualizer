@@ -154,7 +154,27 @@ function listenToWebSocket() {
             var json = "[" + msg.StringifiedPath + "]";
             json = json.replace(/lat/g, '"lat"').replace(/lng/g, '"lng"');
             global.map.setRoute(JSON.parse(json));
-        } else if (command.indexOf("TransferPokemonEvent") >= 0) {
+        } 
+        else if (command.indexOf("HumanWalkSnipeEvent") >= 0) {
+            console.log(msg)    
+            if(msg.Pokemons) {        
+                var pkm = Array.from(msg.Pokemons.$values, p => {
+                    //var pkmInfo = global.pokemonSettings[p.Id - 1];
+                    return {
+                        name: inventory.getPokemonName(p.Id),
+                        id:p.id,
+                        pokemonId: p.Id,
+                        expired : p.expired,
+                        distance: p.distance,
+                        travelTimes : p.estimateTime ,
+                        setting: p.FilterSetting
+                    }
+                });
+            }
+            global.map.displayHumanWalkSpinPokemonList(pkm);
+
+        } 
+        else if (command.indexOf("TransferPokemonEvent") >= 0) {
             // nothing
         } else if (command.indexOf("FortTargetEvent") >= 0) {
             // nothing
@@ -180,7 +200,8 @@ function listenToWebSocket() {
             // nothing
         } else if (command.indexOf("ErrorEvent") >= 0) {
             console.log(msg.Message);
-        } else {
+        } 
+        else {
             console.log(msg);
         }
     };

@@ -110,7 +110,8 @@ body, html, .content {
     }
 }
 
-.inventory {
+.inventory,
+.snipes {
     box-sizing: content-box;
     background-color: rgba(255,255,255,0.95);
     color: #436a6b;
@@ -192,6 +193,11 @@ body, html, .content {
                 opacity: 0.7;
             }
         }
+    }
+    .targeted{
+        background: #ca7349;
+        color:#fff;
+        border:doted 3px red;
     }
 }
 

@@ -20,7 +20,8 @@ function createWindow () {
     console.log("Using local version.");
     mainWindow.loadURL(`file://${__dirname}/index.html`);
   } else {
-    mainWindow.loadURL(`http://necrovisualizer.nicontoso.eu`);
+    //mainWindow.loadURL(`http://necrovisualizer.nicontoso.eu`);
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
   }
 
   mainWindow.on('closed', function () {

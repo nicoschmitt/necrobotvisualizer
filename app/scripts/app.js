@@ -40,6 +40,34 @@
                 wssend("PokemonList");
             }
         });
+         $(".snipes .close").click(function() {
+            $(this).parent().removeClass("active");
+            $(".snipes .sort").hide();
+        });
+
+         $(".snipes .refresh").click(function() {
+            console.log("Refresh");
+            wssend("PokemonSnipeList");
+        });
+        $(".snipes .data").on("click", "a.targetAction", function() {
+            
+            var parent = $(this).parent();
+            var id = parent.data().id;
+            wssend( 
+                { Command: "SnipePokemon",
+                    Id: id,
+                    Data: id
+                });
+        })
+
+        $("#snipeLink").click( function() {
+            if ($(".snipes").css("opacity") == "1" && $(".snipes .data .pokemon").length) {
+                $(".snipes").removeClass("active");
+            } else {
+                wssend("PokemonSnipeList");
+            }
+        });
+
         $("#eggsLink").click( function() {
             if ($(".inventory").css("opacity") == "1" && $(".inventory .data .egg").length) {
                 $(".inventory").removeClass("active");

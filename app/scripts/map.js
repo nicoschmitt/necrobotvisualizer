@@ -265,6 +265,72 @@ Map.prototype.setRoute = function(route) {
 
 }
 
+Map.prototype.displayHumanWalkSpinPokemonList = function(all, sortBy) {
+    console.log("Spine pokemon list");
+    global.active = "spines";
+    this.spinePokemonList = all || this.spinePokemonList;
+    /*
+    if (!sortBy) {
+        sortBy = localStorage.getItem("sortPokemonBy") || "cp";
+    } else {
+        localStorage.setItem("sortPokemonBy", sortBy);
+    }
+
+    if (sortBy == "pokemonId") {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => {
+            if (p1[sortBy] != p2[sortBy]) {
+                return p1[sortBy] - p2[sortBy];
+            }
+            var sort2 = p2["cp"] != p1["cp"] ? "cp" : "iv";
+            return p2[sort2] - p1[sort2];
+        });
+    } else {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => {
+            if (p1[sortBy] != p2[sortBy]) {
+                return p2[sortBy] - p1[sortBy];
+            } else if (p1["pokemonId"] != p2["pokemonId"]) {
+                return p1["pokemonId"] - p2["pokemonId"];
+            } else {
+                var sort2 = (sortBy == "cp") ? "iv" : "cp";
+                return p2[sort2] - p1[sort2];
+            }
+        });
+    }*/
+    if(!this.spinePokemonList) return;
+    var total = this.spinePokemonList.length;
+
+    $(".snipes .numberinfo").text(`${total}`);
+    var div = $(".snipes .data");
+    div.html(``);
+    this.spinePokemonList.forEach(function(elt) {
+        var evolveClass ="";
+        var walking = elt.walkingTo? "walking" :"";
+        var targeted = elt.setting.Priority == 0 ? "targeted":"";
+
+        var distance = Math.round(elt.distance,2);
+        var expired = moment(elt.expired).fromNow();
+        var estimate =Math.round(elt.travelTimes/60,0) +"min " + Math.round(elt.travelTimes%60,0) +"sec";
+        var speed = elt.setting.MaxSpeedUpSpeed;
+        var isAllowSpeedUp = elt.setting.AllowSpeedUp;
+        //var ms = new Date(elt.expires)    
+
+        div.append(`
+            <div class="pokemon ${walking} ${targeted}">
+                <div class="transfer" data-id='${elt.id}'>
+                    <a title='Snipes this ${elt.name}' href="#" class="targetAction"><img src="./assets/img/evolve.png" /></a>
+                </div>
+                <span class="imgspan ${evolveClass}"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
+                <span class="name">${elt.name} </span>
+                <span class="info">Dist: <strong>${distance}</strong>m</span>
+                <span class="info">Exp: ${expired}</span></span>
+                <span class="info">Walk: ${estimate} ${speed} km/h</span></span>
+            </div>
+        `);
+    });
+    //$(".pokemonsort").show();
+    $(".snipes").show().addClass("active");
+}
+
 Map.prototype.displayPokemonList = function(all, sortBy, eggs) {
     console.log("Pokemon list");
     global.active = "pokemon";

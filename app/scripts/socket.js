@@ -112,7 +112,7 @@ function listenToWebSocket() {
                     lvl: inventory.getPokemonLevel(p.Item1),
                 }
             });
-            global.map.displayPokemonList(pkm);
+            global.map.displayPokemonList(pkm, msg.Type);
         } else if (command.indexOf("EggsListEvent") >= 0) {
             var incubators = Array.from(msg.Incubators.$values, i => {
                 if (i.TargetKmWalked != 0 || i.StartKmWalked != 0) {
@@ -156,22 +156,8 @@ function listenToWebSocket() {
             global.map.setRoute(JSON.parse(json));
         } 
         else if (command.indexOf("HumanWalkSnipeEvent") >= 0) {
-            console.log(msg)    
-            if(msg.Pokemons) {        
-                var pkm = Array.from(msg.Pokemons.$values, p => {
-                    //var pkmInfo = global.pokemonSettings[p.Id - 1];
-                    return {
-                        name: inventory.getPokemonName(p.Id),
-                        id:p.id,
-                        pokemonId: p.Id,
-                        expired : p.expired,
-                        distance: p.distance,
-                        travelTimes : p.estimateTime ,
-                        setting: p.FilterSetting
-                    }
-                });
-            }
-            global.map.displayHumanWalkSpinPokemonList(pkm);
+                
+            handleHumanWalkingEvent(msg);
 
         } 
         else if (command.indexOf("TransferPokemonEvent") >= 0) {
@@ -206,7 +192,41 @@ function listenToWebSocket() {
         }
     };
 }
+function handleHumanWalkingEvent(msg) {
+    if(msg.Pokemons) {        
+        var pkm = Array.from(msg.Pokemons.$values, p => {
+            //var pkmInfo = global.pokemonSettings[p.Id - 1];
+            return {
+                name: inventory.getPokemonName(p.Id),
+                id:p.id,
+                pokemonId: p.Id,
+                expired : p.expired,
+                distance: p.distance,
+                travelTimes : p.estimateTime ,
+                setting: p.FilterSetting
+            }
+        });
+    global.map.displayHumanWalkSnipePokemonList(pkm);
 
+    }
+    if(msg.Type == 0) {
+        var data = {
+            id: msg.PokemonId, 
+            name : inventory.getPokemonName(msg.PokemonId),
+            lat : msg.Latitude,
+            lng:  msg.Longitude
+        }
+        global.map.displayHumanWalkSnipePokemonTarget(data);
+    }
+    if(msg.Type == 1) {
+        simpleMessageToast( {
+            title: 'Human walk snipes',
+            message : 'destination reached, looking for pokemons'
+        })   
+    }
+    
+
+}
 function errorToast(message) {
     toastr.error(message, "Error", {
         "progressBar": true,
@@ -215,7 +235,18 @@ function errorToast(message) {
         "closeButton": true
     });
 }
+function  simpleMessageToast(options) {
 
+    if (global.config.noPopup) return;
+
+    options = options || {};
+     toast(options.message, options.title, {
+        "progressBar": true,
+        "positionClass": "toast-bottom-left",
+        "timeOut": "5000",
+        "closeButton": true
+    })   
+}
 function pokemonToast(pkm, options) {
     if (global.config.noPopup) return;
 

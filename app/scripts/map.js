@@ -265,7 +265,40 @@ Map.prototype.setRoute = function(route) {
 
 }
 
-Map.prototype.displayHumanWalkSpinPokemonList = function(all, sortBy) {
+Map.prototype.displayHumanWalkSnipePokemonTarget = function(pokemon) {
+    if(this.target) {
+        //remove target
+        this.map.removeLayer(this.target);
+    }
+
+    var pInfo = `${pokemon.name }`
+    var icon = L.icon({ iconUrl: `./assets/pokemon/${pokemon.id}.png`, iconSize: [90, 90], iconAnchor: [45, 45] });
+    var pokeIcon = L.marker([pokemon.lat, pokemon.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pInfo);
+    var options = {
+        radius:80,
+        opacity:0.7,
+        fill:true,
+        fillOpacity:0.7,
+        color:'#f00',
+        className:'targeted-icon'
+    }
+    var circle = L.circleMarker([pokemon.lat, pokemon.lng], options);
+    console.log(this.me.getLatLng())
+     var polyline = L.polyline([
+            [pokemon.lat, pokemon.lng],
+            this.me.getLatLng()],
+            {
+                color: 'green',
+                weight: 3,
+                opacity: .55,
+                dashArray: '20,15',
+                lineJoin: 'round'
+            })
+
+    this.target = L.layerGroup([pokeIcon, circle,polyline]).addTo(this.map);
+}
+
+Map.prototype.displayHumanWalkSnipePokemonList = function(all, sortBy) {
     console.log("Spine pokemon list");
     global.active = "spines";
     this.spinePokemonList = all || this.spinePokemonList;
@@ -328,7 +361,10 @@ Map.prototype.displayHumanWalkSpinPokemonList = function(all, sortBy) {
         `);
     });
     //$(".pokemonsort").show();
-    $(".snipes").show().addClass("active");
+    if($(".snipes").data('waiting-response')) {
+        $(".snipes").data('waiting-response', false)
+        $(".snipes").show().addClass("active");
+    }
 }
 
 Map.prototype.displayPokemonList = function(all, sortBy, eggs) {
@@ -367,7 +403,7 @@ Map.prototype.displayPokemonList = function(all, sortBy, eggs) {
     $(".inventory .numberinfo").text(`${total}/${global.storage.pokemon}`);
     var div = $(".inventory .data");
     div.html(``);
-    this.pokemonList.forEach(function(elt) {
+    this.pokemonList.forEach(function(elt, type) {
         var canEvolve = elt.canEvolve && !elt.inGym && elt.candy >= elt.candyToEvolve;
         var evolveStyle = canEvolve ? "" : "hide";
         var evolveClass = canEvolve ? "canEvolve" : "";

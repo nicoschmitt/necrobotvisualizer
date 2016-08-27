@@ -64,6 +64,7 @@
             if ($(".snipes").css("opacity") == "1" && $(".snipes .data .pokemon").length) {
                 $(".snipes").removeClass("active");
             } else {
+                $('.snipes').data('waiting-response', true)
                 wssend("PokemonSnipeList");
             }
         });

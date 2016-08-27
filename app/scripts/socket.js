@@ -203,7 +203,9 @@ function handleHumanWalkingEvent(msg) {
                 expired : p.expired,
                 distance: p.distance,
                 travelTimes : p.estimateTime ,
-                setting: p.FilterSetting
+                setting: p.FilterSetting,
+                available : !p.visited,
+                catching: p.catching
             }
         });
     global.map.displayHumanWalkSnipePokemonList(pkm);
@@ -240,7 +242,7 @@ function  simpleMessageToast(options) {
     if (global.config.noPopup) return;
 
     options = options || {};
-     toast(options.message, options.title, {
+    toast(options.message, options.title, {
         "progressBar": true,
         "positionClass": "toast-bottom-left",
         "timeOut": "5000",

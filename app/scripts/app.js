@@ -59,6 +59,27 @@
                     Data: id
                 });
         })
+         $(".snipes .data").on("click", "a.dequeueAction", function() {
+            console.log('remote pokemon from list')
+            var parent = $(this).parent();
+            var id = parent.data().id;
+            var name = parent.data().name;
+
+            var msg = `Are you sure you want to remove ${name} from sniping list?`;
+            confirmAndSendToServer(msg, () => {
+                wssend( 
+                { Command: "RemovePokemon",
+                    Id: id,
+                    Data: id
+                });
+
+                //parent.parent().fadeOut();
+            });
+
+            
+        })
+
+
 
         $("#snipeLink").click( function() {
             if ($(".snipes").css("opacity") == "1" && $(".snipes .data .pokemon").length) {

@@ -41,6 +41,11 @@ var Map = function(parentDiv) {
         $(`.leaflet-control-layers-base span:contains('${base}')`).first().prev().click();
     }
 
+    L.easyButton('fa-refresh', function (btn, map) {
+        //TODO implement later
+    }).addTo(this.map);
+
+
     this.map.on('singleclick', (function(ev) { this.setDestination(ev.latlng) }).bind(this));
 
     this.path = null;
@@ -336,8 +341,9 @@ Map.prototype.displayHumanWalkSnipePokemonList = function(all, sortBy) {
     var div = $(".snipes .data");
     div.html(``);
     this.spinePokemonList.forEach(function(elt) {
+        if(!elt.available) return;
         var evolveClass ="";
-        var walking = elt.walkingTo? "walking" :"";
+        var walking = elt.catching? "walking" :"";
         var targeted = elt.setting.Priority == 0 ? "targeted":"";
 
         var distance = Math.round(elt.distance,2);
@@ -346,11 +352,14 @@ Map.prototype.displayHumanWalkSnipePokemonList = function(all, sortBy) {
         var speed = elt.setting.MaxSpeedUpSpeed;
         var isAllowSpeedUp = elt.setting.AllowSpeedUp;
         //var ms = new Date(elt.expires)    
+        var catching = elt.catching ? 'hide': '';
+
 
         div.append(`
             <div class="pokemon ${walking} ${targeted}">
-                <div class="transfer" data-id='${elt.id}'>
-                    <a title='Snipes this ${elt.name}' href="#" class="targetAction"><img src="./assets/img/evolve.png" /></a>
+                <div class="transfer" data-id='${elt.id}' data-name="${elt.name}">
+                    <a title='Snipes this ${elt.name}' href="#" class="targetAction ${catching}"><img src="./assets/img/evolve.png" /></a>
+                    <a title='Remove ${elt.name} ' href="#" class="dequeueAction ${catching}"><img src="./assets/img/recyclebin.png" /></a>
                 </div>
                 <span class="imgspan ${evolveClass}"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
                 <span class="name">${elt.name} </span>

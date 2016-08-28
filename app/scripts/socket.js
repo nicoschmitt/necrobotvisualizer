@@ -208,7 +208,7 @@ function pokemonToast(pkm, options) {
     var pkminfo = pkm.name;
     if (pkm.lvl) pkminfo += ` (lvl ${pkm.lvl})`;
 	
-	if(pkm.move1 && pkm.move2)  pkminfo += `<br/> (Move ${pkm.move1}, ${pkm.move2})`;
+	if(pkm.move1 && pkm.move2)  pkminfo += `<br/>Move ${pkm.move1}, ${pkm.move2}`;
 
     var content = `<div>${pkminfo}</div><div>`;
     content += `<img src='./assets/pokemon/${pkm.id}.png' height='50' />`;

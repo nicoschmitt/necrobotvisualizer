@@ -197,7 +197,15 @@ body, html, .content {
     .targeted{
         background: #ca7349;
         color:#fff;
-        border:doted 3px red;
+        border:dotted 3px red;
+    }
+    .walking{
+        background: green;
+        color:#fff;
+        border:doted 3px yellow;
+        a{
+            display:none;
+        }
     }
 }
 

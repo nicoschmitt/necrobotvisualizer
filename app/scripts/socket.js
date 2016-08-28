@@ -193,6 +193,7 @@ function listenToWebSocket() {
     };
 }
 function handleHumanWalkingEvent(msg) {
+    console.log(msg)
     if(msg.Pokemons) {        
         var pkm = Array.from(msg.Pokemons.$values, p => {
             //var pkmInfo = global.pokemonSettings[p.Id - 1];
@@ -200,12 +201,12 @@ function handleHumanWalkingEvent(msg) {
                 name: inventory.getPokemonName(p.Id),
                 id:p.id,
                 pokemonId: p.Id,
-                expired : p.expired,
-                distance: p.distance,
-                travelTimes : p.estimateTime ,
-                setting: p.FilterSetting,
-                available : !p.visited,
-                catching: p.catching
+                expired : p.ExpiredTime,
+                distance: p.Distance,
+                travelTimes : p.EstimatedTime ,
+                setting: p.Setting,
+                available : !p.IsVisited,
+                catching: p.IsCatching
             }
         });
     global.map.displayHumanWalkSnipePokemonList(pkm);
@@ -242,7 +243,7 @@ function  simpleMessageToast(options) {
     if (global.config.noPopup) return;
 
     options = options || {};
-    toast(options.message, options.title, {
+    toastr.info(options.message, options.title, {
         "progressBar": true,
         "positionClass": "toast-bottom-left",
         "timeOut": "5000",

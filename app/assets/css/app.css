@@ -199,7 +199,15 @@ body, html, .content {
   .snipes .targeted {
     background: #ca7349;
     color: #fff;
-    border: doted 3px red; }
+    border: dotted 3px red; }
+  .inventory .walking,
+  .snipes .walking {
+    background: green;
+    color: #fff;
+    border: doted 3px yellow; }
+    .inventory .walking a,
+    .snipes .walking a {
+      display: none; }
 
 .item, .egg, .pokemon {
   box-sizing: border-box;

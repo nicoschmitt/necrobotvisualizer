@@ -41,6 +41,11 @@ var Map = function(parentDiv) {
         $(`.leaflet-control-layers-base span:contains('${base}')`).first().prev().click();
     }
 
+    L.easyButton('fa-refresh', function (btn, map) {
+        //TODO implement later
+    }).addTo(this.map);
+
+
     this.map.on('singleclick', (function(ev) { this.setDestination(ev.latlng) }).bind(this));
 
     this.path = null;
@@ -92,9 +97,17 @@ Map.prototype.initPath = function() {
     if (this.path != null) return true;
 
     if (!this.me) {
+
+        this.map.setView([this.steps[0].lat, this.steps[0].lng], 16);
+        var icon =  new L.Icon({
+               // iconUrl : "https://harrywood.co.uk/maps/examples/leaflet/marker-icon-red.png"
+               iconUrl:"http://orig13.deviantart.net/9754/f/2011/307/2/e/original_trainer_red_sprite_bw_by_flamejow-d4dtyxy.png",
+               iconSize:     [80, 80],
+               iconAnchor:   [40, 0]
+        })
         var last = this.steps[this.steps.length - 1];
         this.map.setView([last.lat, last.lng], 16);
-        this.me = L.marker([last.lat, last.lng], { zIndexOffset: 200 }).addTo(this.map).bindPopup(`${last.lat.toFixed(4)},${last.lng.toFixed(4)}`);
+        this.me = L.marker([last.lat, last.lng], { zIndexOffset: 200 , icon: icon}).addTo(this.map).bindPopup(`${last.lat.toFixed(4)},${last.lng.toFixed(4)}`);
         $(".loading").hide();
     }
 
@@ -257,6 +270,112 @@ Map.prototype.setRoute = function(route) {
 
 }
 
+Map.prototype.displayHumanWalkSnipePokemonTarget = function(pokemon) {
+    if(this.target) {
+        //remove target
+        this.map.removeLayer(this.target);
+    }
+
+    var pInfo = `${pokemon.name }`
+    var icon = L.icon({ iconUrl: `./assets/pokemon/${pokemon.id}.png`, iconSize: [90, 90], iconAnchor: [45, 45] });
+    var pokeIcon = L.marker([pokemon.lat, pokemon.lng], {icon: icon, zIndexOffset: 100 }).bindPopup(pInfo);
+    var options = {
+        radius:80,
+        opacity:0.7,
+        fill:true,
+        fillOpacity:0.7,
+        color:'#f00',
+        className:'targeted-icon'
+    }
+    var circle = L.circleMarker([pokemon.lat, pokemon.lng], options);
+    console.log(this.me.getLatLng())
+     var polyline = L.polyline([
+            [pokemon.lat, pokemon.lng],
+            this.me.getLatLng()],
+            {
+                color: 'green',
+                weight: 3,
+                opacity: .55,
+                dashArray: '20,15',
+                lineJoin: 'round'
+            })
+
+    this.target = L.layerGroup([pokeIcon, circle,polyline]).addTo(this.map);
+}
+
+Map.prototype.displayHumanWalkSnipePokemonList = function(all, sortBy) {
+    console.log("Spine pokemon list");
+    global.active = "spines";
+    this.spinePokemonList = all || this.spinePokemonList;
+    /*
+    if (!sortBy) {
+        sortBy = localStorage.getItem("sortPokemonBy") || "cp";
+    } else {
+        localStorage.setItem("sortPokemonBy", sortBy);
+    }
+
+    if (sortBy == "pokemonId") {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => {
+            if (p1[sortBy] != p2[sortBy]) {
+                return p1[sortBy] - p2[sortBy];
+            }
+            var sort2 = p2["cp"] != p1["cp"] ? "cp" : "iv";
+            return p2[sort2] - p1[sort2];
+        });
+    } else {
+        this.pokemonList = this.pokemonList.sort((p1, p2) => {
+            if (p1[sortBy] != p2[sortBy]) {
+                return p2[sortBy] - p1[sortBy];
+            } else if (p1["pokemonId"] != p2["pokemonId"]) {
+                return p1["pokemonId"] - p2["pokemonId"];
+            } else {
+                var sort2 = (sortBy == "cp") ? "iv" : "cp";
+                return p2[sort2] - p1[sort2];
+            }
+        });
+    }*/
+    if(!this.spinePokemonList) return;
+    var total = this.spinePokemonList.length;
+
+    $(".snipes .numberinfo").text(`${total}`);
+    var div = $(".snipes .data");
+    div.html(``);
+    this.spinePokemonList.forEach(function(elt) {
+        if(!elt.available) return;
+        var evolveClass ="";
+        var walking = elt.catching? "walking" :"";
+        var targeted = elt.setting.Priority == 0 ? "targeted":"";
+
+        var distance = Math.round(elt.distance,2);
+        var expired = moment(elt.expired).fromNow();
+        var estimate =Math.round(elt.travelTimes/60,0) +"min " + Math.round(elt.travelTimes%60,0) +"sec";
+        var speed = elt.setting.MaxSpeedUpSpeed;
+        var isAllowSpeedUp = elt.setting.AllowSpeedUp;
+        //var ms = new Date(elt.expires)    
+        var catching = elt.catching ? 'hide': '';
+
+
+        div.append(`
+            <div class="pokemon ${walking} ${targeted}">
+                <div class="transfer" data-id='${elt.id}' data-name="${elt.name}">
+                    <a title='Snipes this ${elt.name}' href="#" class="targetAction ${catching}"><img src="./assets/img/evolve.png" /></a>
+                    <a title='Remove ${elt.name} ' href="#" class="dequeueAction ${catching}"><img src="./assets/img/recyclebin.png" /></a>
+                </div>
+                <span class="imgspan ${evolveClass}"><img src="./assets/pokemon/${elt.pokemonId}.png" /></span>
+                <span class="name">${elt.name} </span>
+                <span class="info">Dist: <strong>${distance}</strong>m</span>
+                <span class="info">Exp: ${expired}</span></span>
+                <span class="info">Walk: ${estimate} ${speed} km/h</span></span>
+            </div>
+        `);
+    });
+    //$(".pokemonsort").show();
+    if($(".snipes").data('waiting-response')) {
+        $(".snipes").data('waiting-response', false)
+        $(".snipes").show().addClass("active");
+    }
+}
+
 Map.prototype.displayPokemonList = function(all, sortBy, eggs) {
     console.log("Pokemon list");
     global.active = "pokemon";
@@ -293,7 +412,7 @@ Map.prototype.displayPokemonList = function(all, sortBy, eggs) {
     $(".inventory .numberinfo").text(`${total}/${global.storage.pokemon}`);
     var div = $(".inventory .data");
     div.html(``);
-    this.pokemonList.forEach(function(elt) {
+    this.pokemonList.forEach(function(elt, type) {
         var canEvolve = elt.canEvolve && !elt.inGym && elt.candy >= elt.candyToEvolve;
         var evolveStyle = canEvolve ? "" : "hide";
         var evolveClass = canEvolve ? "canEvolve" : "";
